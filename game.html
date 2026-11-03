@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Frog’s Spelling Adventure · Four Worlds</title>
-<meta name="frog-game-build" content="lite-combined-v1.3-preview">
+<meta name="frog-game-build" content="lite-combined-v1.8-student-pond-return">
 <style>
 :root{--ink:#17334d;--cream:#fff9df;--pink:#ff78a8;--yellow:#ffe45c;--blue:#38bdf8;--green:#62d96b}
 *{box-sizing:border-box} body{margin:0;background:#75d9ff;color:var(--ink);font-family:"Trebuchet MS",Arial,sans-serif}
@@ -332,10 +332,10 @@ body{background:linear-gradient(#d3f0ee,#f2f9df);background-attachment:fixed}.pa
     </div>
     <iframe id="secretWorldFrame" title="Frog Spelling Adventure secret bridge and water-balloon finale" allow="autoplay" loading="eager"></iframe>
   </section>
-  <footer>Made for brave spellers. Original retro-inspired characters and artwork. · LITE Combined v1.7 · Updated November 2, 2026</footer>
+  <footer>Made for brave spellers. Original retro-inspired characters and artwork. · LITE Combined v1.8 · Updated November 2, 2026</footer>
 </div>
 <script>
-const GAME_BUILD = "lite-combined-v1.7-secret-layout";
+const GAME_BUILD = "lite-combined-v1.8-student-pond-return";
 /*
   CONFIGURATION:
   After deploying the included Google Apps Script, paste its Web App URL below.
@@ -1478,6 +1478,13 @@ function frogRefreshVoices(){
   currentWorld=1;replayRequired=false;battleMisses=0;hits=0;
   unlock.classList.add('hidden');
   document.getElementById('studentName').value='';
+  // When launched through the LITE Student Pond, return to the froglet picker.
+  // Never expose the old standalone demo/class-name page to students after the secret finale.
+  if(FL_BRIDGE_MODE && FL_BRIDGE_ACTIVE && FL_PARENT_ORIGIN){
+   window.parent.postMessage({type:'frog-lite:return'},FL_PARENT_ORIGIN);
+   return;
+  }
+  // Keep the independent, teacher-only standalone preview usable.
   showScreen('home');
  }
  unlock.addEventListener('click',()=>{
